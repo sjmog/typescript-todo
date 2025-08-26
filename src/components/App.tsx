@@ -1,7 +1,10 @@
 import { useRef, useState } from "react";
+import { Todo } from "../types/Todo";
+import TodoItem from "./TodoItem";
+import TodoInput from "./TodoInput";
 
 export default function App() {
-  const [todos, setTodos] = useState<string[]>([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
 
   const todoInput = useRef<HTMLInputElement>(null);
 
@@ -9,7 +12,7 @@ export default function App() {
     const newTodo = todoInput.current?.value;
 
     if (newTodo) {
-      setTodos([...todos, newTodo]);
+      setTodos([...todos, { text: newTodo, completed: false }]);
       todoInput.current!.value = "";
     }
   };
@@ -18,24 +21,28 @@ export default function App() {
     setTodos(todos.filter((_, i) => i !== index));
   };
 
+  const completeTodo = (index: number) => {
+    setTodos(
+      todos.map((todo, i) =>
+        i === index ? { ...todo, completed: true } : todo
+      )
+    );
+  };
+
   return (
-    <div data-testid="todo-items">
-      {todos.map((todo, index) => (
-        <div key={index} data-testid="todo-item">
-          {todo}
-          <button data-testid="delete-button" onClick={() => deleteTodo(index)}>
-            Delete
-          </button>
-        </div>
-      ))}
-      <label htmlFor="todo-input">Add a todo</label>
-      <input
-        id="todo-input"
-        ref={todoInput}
-        type="text"
-        placeholder="Add a todo"
-      />
-      <button onClick={addTodo}>Add Todo</button>
-    </div>
+    <main>
+      <ul data-testid="todo-items">
+        {todos.map((todo, index) => (
+          <TodoItem
+            key={index}
+            index={index}
+            todo={todo}
+            onDelete={deleteTodo}
+            onComplete={completeTodo}
+          />
+        ))}
+      </ul>
+      <TodoInput ref={todoInput} onAddTodo={addTodo} />
+    </main>
   );
 }
