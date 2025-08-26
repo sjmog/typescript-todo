@@ -7,8 +7,15 @@ export default function App() {
 
   const addTodo = () => {
     const newTodo = todoInput.current?.value;
-    newTodo && setTodos([...todos, newTodo]);
-    todoInput.current!.value = "";
+
+    if (newTodo) {
+      setTodos([...todos, newTodo]);
+      todoInput.current!.value = "";
+    }
+  };
+
+  const deleteTodo = (index: number) => {
+    setTodos(todos.filter((_, i) => i !== index));
   };
 
   return (
@@ -16,6 +23,9 @@ export default function App() {
       {todos.map((todo, index) => (
         <div key={index} data-testid="todo-item">
           {todo}
+          <button data-testid="delete-button" onClick={() => deleteTodo(index)}>
+            Delete
+          </button>
         </div>
       ))}
       <label htmlFor="todo-input">Add a todo</label>
