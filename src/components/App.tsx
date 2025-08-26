@@ -8,6 +8,7 @@ export default function App() {
   const addTodo = () => {
     const newTodo = todoInput.current?.value;
     newTodo && setTodos([...todos, newTodo]);
+    todoInput.current!.value = "";
   };
 
   return (

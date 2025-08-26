@@ -30,3 +30,10 @@ test("Cannot add a blank todo", async () => {
   await userEvent.click(addTodoButton(screen));
   expect(todoItems(screen)).toHaveLength(0);
 });
+
+test("Input is cleared after adding a todo", async () => {
+  await userEvent.type(todoInput(screen), "First todo");
+  await userEvent.click(addTodoButton(screen));
+
+  expect(todoInput(screen)).toHaveValue("");
+});
