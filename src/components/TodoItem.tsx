@@ -16,7 +16,6 @@ export default function TodoItem({ todo }: TodoItemProps) {
       >
         {todo.text}
       </span>
-      ƒ
       <button data-testid="delete-button" onClick={() => deleteTodo(todo)}>
         Delete
       </button>
