@@ -6,7 +6,7 @@ interface TodoStore {
   todos: Todo[];
   addTodo: (text: string | undefined) => boolean;
   deleteTodo: (todo: Todo) => void;
-  completeTodo: (todo: Todo) => void;
+  toggleCompleteTodo: (todo: Todo) => void;
 }
 
 export const useTodoStore = create<TodoStore>((set) => ({
@@ -27,10 +27,10 @@ export const useTodoStore = create<TodoStore>((set) => ({
       todos: state.todos.filter((t) => t.id !== todo.id),
     }));
   },
-  completeTodo: (todo: Todo) => {
+  toggleCompleteTodo: (todo: Todo) => {
     set((state) => ({
       todos: state.todos.map((t) =>
-        t.id === todo.id ? { ...t, completed: true } : t
+        t.id === todo.id ? { ...t, completed: !t.completed } : t
       ),
     }));
   },

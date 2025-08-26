@@ -47,9 +47,21 @@ test("A todo is strikethrough when it is completed", async () => {
     textDecoration: "line-through",
   });
 
-  await actions.completeTodo(screen, 0);
+  await actions.toggleCompleteTodo(screen, 0);
 
   expect(elements.todoText(screen, 0)).toHaveStyle({
     textDecoration: "line-through",
   });
+});
+
+test("A todo can be uncompleted", async () => {
+  await actions.addTodo(screen, "First todo");
+  await actions.toggleCompleteTodo(screen, 0);
+  expect(elements.completeButton(screen, 0)).toHaveTextContent("Uncomplete");
+  await actions.toggleCompleteTodo(screen, 0);
+
+  expect(elements.todoText(screen, 0)).not.toHaveStyle({
+    textDecoration: "line-through",
+  });
+  expect(elements.completeButton(screen, 0)).toHaveTextContent("Complete");
 });

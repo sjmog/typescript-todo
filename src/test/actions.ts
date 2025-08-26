@@ -10,7 +10,7 @@ const actions = {
     await userEvent.type(elements.todoInput(screen), todo);
     await actions.clickAddTodoButton(screen);
   },
-  completeTodo: async (screen: RenderResult, index: number) => {
+  toggleCompleteTodo: async (screen: RenderResult, index: number) => {
     await userEvent.click(elements.completeButton(screen, index));
   },
   deleteTodo: async (screen: RenderResult, index: number) => {

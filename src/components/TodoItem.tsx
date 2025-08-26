@@ -6,7 +6,7 @@ interface TodoItemProps {
 }
 
 export default function TodoItem({ todo }: TodoItemProps) {
-  const { deleteTodo, completeTodo } = useTodoStore();
+  const { deleteTodo, toggleCompleteTodo } = useTodoStore();
 
   return (
     <li data-testid="todo-item">
@@ -16,11 +16,15 @@ export default function TodoItem({ todo }: TodoItemProps) {
       >
         {todo.text}
       </span>
+      ƒ
       <button data-testid="delete-button" onClick={() => deleteTodo(todo)}>
         Delete
       </button>
-      <button data-testid="complete-button" onClick={() => completeTodo(todo)}>
-        Complete
+      <button
+        data-testid="complete-button"
+        onClick={() => toggleCompleteTodo(todo)}
+      >
+        {todo.completed ? "Uncomplete" : "Complete"}
       </button>
     </li>
   );
