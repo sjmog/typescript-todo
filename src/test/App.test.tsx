@@ -2,7 +2,7 @@
 import { test, expect, beforeEach } from "vitest";
 import { userEvent } from "@vitest/browser/context";
 import { render, RenderResult, within } from "@testing-library/react";
-import App from "../components/App";
+import { App } from "@/components";
 
 const elements = {
   todoItems: (screen: RenderResult) => screen.queryAllByTestId("todo-item"),

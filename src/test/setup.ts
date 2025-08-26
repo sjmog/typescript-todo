@@ -4,7 +4,7 @@
 
 import { afterEach } from 'vitest'
 import { cleanup } from '@testing-library/react'
-import { useTodoStore } from '../store/store';
+import { useTodoStore } from '@/store';
 
 afterEach(() => {
   cleanup();

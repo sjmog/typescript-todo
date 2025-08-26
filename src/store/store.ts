@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Todo } from "../types/Todo";
+import { Todo } from "@/types";
 
 interface TodoStore {
   globalId: number;

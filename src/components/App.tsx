@@ -1,6 +1,5 @@
-import TodoItem from "./TodoItem";
-import TodoInput from "./TodoInput";
-import { useTodoStore } from "../store/store";
+import { TodoItem, TodoInput } from "@/components";
+import { useTodoStore } from "@/store";
 
 export default function App() {
   const todos = useTodoStore((state) => state.todos);
@@ -8,8 +7,8 @@ export default function App() {
   return (
     <main>
       <ul data-testid="todo-items">
-        {todos.map((todo, index) => (
-          <TodoItem key={index} todo={todo} />
+        {todos.map((todo) => (
+          <TodoItem key={todo.id} todo={todo} />
         ))}
       </ul>
       <TodoInput />

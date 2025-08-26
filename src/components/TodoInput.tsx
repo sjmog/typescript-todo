@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useTodoStore } from "../store/store";
+import { useTodoStore } from "@/store";
 
 const TodoInput = () => {
   const addTodo = useTodoStore((state) => state.addTodo);

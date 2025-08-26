@@ -1,5 +1,5 @@
 import { Todo } from "../types/Todo";
-import { useTodoStore } from "../store/store";
+import { useTodoStore } from "@/store";
 
 interface TodoItemProps {
   todo: Todo;
