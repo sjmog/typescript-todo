@@ -1,0 +1,28 @@
+{
+  "name": "typescript-todo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.10.0",
+  "devDependencies": {
+    "@types/react": "^19.1.11",
+    "@types/react-dom": "^19.1.8",
+    "@vitejs/plugin-react": "^5.0.1",
+    "@vitest/browser": "^3.2.4",
+    "playwright": "^1.55.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4",
+    "vitest-browser-react": "^1.0.1"
+  }
+}
