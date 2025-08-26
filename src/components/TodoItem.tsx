@@ -1,18 +1,13 @@
 import { Todo } from "../types/Todo";
+import { useTodoStore } from "../store/store";
 
 interface TodoItemProps {
-  index: number;
   todo: Todo;
-  onDelete: (index: number) => void;
-  onComplete: (index: number) => void;
 }
 
-export default function TodoItem({
-  index,
-  todo,
-  onDelete,
-  onComplete,
-}: TodoItemProps) {
+export default function TodoItem({ todo }: TodoItemProps) {
+  const { deleteTodo, completeTodo } = useTodoStore();
+
   return (
     <li data-testid="todo-item">
       <span
@@ -21,10 +16,10 @@ export default function TodoItem({
       >
         {todo.text}
       </span>
-      <button data-testid="delete-button" onClick={() => onDelete(index)}>
+      <button data-testid="delete-button" onClick={() => deleteTodo(todo)}>
         Delete
       </button>
-      <button data-testid="complete-button" onClick={() => onComplete(index)}>
+      <button data-testid="complete-button" onClick={() => completeTodo(todo)}>
         Complete
       </button>
     </li>

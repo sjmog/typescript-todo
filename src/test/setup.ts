@@ -4,7 +4,9 @@
 
 import { afterEach } from 'vitest'
 import { cleanup } from '@testing-library/react'
+import { useTodoStore } from '../store/store';
 
 afterEach(() => {
   cleanup();
+  useTodoStore.setState({ todos: [] });
 })
