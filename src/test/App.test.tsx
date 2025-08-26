@@ -21,19 +21,23 @@ test("Can add a todo", async () => {
   expect(elements.todoText(screen, 0)).toHaveTextContent("First todo");
 });
 
-test("Cannot add a blank todo", async () => {
-  await actions.clickAddTodoButton(screen);
-  expect(elements.todoItems(screen)).toHaveLength(0);
+test("Input button is disabled when adding a blank todo", async () => {
+  expect(elements.addTodoButton(screen)).toBeDisabled();
+});
+
+test("Input button is enabled when adding a valid todo", async () => {
+  await actions.typeTodoInput(screen, "First todo");
+  expect(elements.addTodoButton(screen)).toBeEnabled();
 });
 
 test("Input error is shown when adding a blank todo", async () => {
-  await actions.clickAddTodoButton(screen);
-
+  await actions.addTodo(screen, "   ");
   expect(elements.inputError(screen)).toBeVisible();
   expect(elements.inputError(screen)).toHaveTextContent("Todo cannot be blank");
 });
 
 test("Input error disappears when a valid todo is added", async () => {
+  await actions.typeTodoInput(screen, "   ");
   await actions.clickAddTodoButton(screen);
   expect(elements.inputError(screen)).toHaveTextContent("Todo cannot be blank");
 

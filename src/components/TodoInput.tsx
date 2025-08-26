@@ -1,18 +1,19 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useTodoStore } from "@/store";
 
 const TodoInput = () => {
   const addTodo = useTodoStore((state) => state.addTodo);
-  const todoInput = useRef<HTMLInputElement>(null);
-  const [inputError, setInputError] = useState("");
+  const [inputError, setInputError] = useState<string | null>(null);
+  const [newTodo, setNewTodo] = useState<string>("");
+
+  const isInputValid: boolean = !!newTodo;
 
   const handleAddTodo = () => {
-    const todoText = todoInput.current?.value;
-    if (!addTodo(todoText)) {
+    if (!addTodo(newTodo)) {
       setInputError("Todo cannot be blank");
     } else {
-      todoInput.current!.value = "";
-      setInputError("");
+      setNewTodo("");
+      setInputError(null);
     }
   };
 
@@ -21,11 +22,14 @@ const TodoInput = () => {
       <label htmlFor="todo-input">Add a todo</label>
       <input
         id="todo-input"
-        ref={todoInput}
+        value={newTodo}
+        onChange={(e) => setNewTodo(e.target.value)}
         type="text"
         placeholder="Add a todo"
       />
-      <button onClick={handleAddTodo}>Add Todo</button>
+      <button disabled={!isInputValid} onClick={handleAddTodo}>
+        Add Todo
+      </button>
       <p data-testid="input-error">{inputError}</p>
     </>
   );

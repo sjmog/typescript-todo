@@ -6,8 +6,11 @@ const actions = {
   clickAddTodoButton: async (screen: RenderResult) => {
     await userEvent.click(elements.addTodoButton(screen));
   },
-  addTodo: async (screen: RenderResult, todo: string) => {
+  typeTodoInput: async (screen: RenderResult, todo: string) => {
     await userEvent.type(elements.todoInput(screen), todo);
+  },
+  addTodo: async (screen: RenderResult, todo: string) => {
+    await actions.typeTodoInput(screen, todo);
     await actions.clickAddTodoButton(screen);
   },
   toggleCompleteTodo: async (screen: RenderResult, index: number) => {
