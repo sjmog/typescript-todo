@@ -4,7 +4,7 @@ import { Todo } from "@/types";
 interface TodoStore {
   globalId: number;
   todos: Todo[];
-  addTodo: (text: string | undefined) => boolean;
+  addTodo: (text: string) => void;
   deleteTodo: (todo: Todo) => void;
   toggleCompleteTodo: (todo: Todo) => void;
 }
@@ -12,15 +12,11 @@ interface TodoStore {
 export const useTodoStore = create<TodoStore>((set) => ({
   globalId: 1,
   todos: [],
-  addTodo: (text: string | undefined) => {
-    if (!text || text.trim() === "") return false;
-
+  addTodo: (text: string) => {
     set((state) => ({
       todos: [...state.todos, { id: state.globalId, text, completed: false }],
       globalId: state.globalId + 1,
     }));
-
-    return true;
   },
   deleteTodo: (todo: Todo) => {
     set((state) => ({

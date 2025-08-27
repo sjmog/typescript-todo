@@ -14,57 +14,40 @@ test("Todos start empty", async () => {
   expect(elements.todoItems(screen)).toHaveLength(0);
 });
 
-test("Can add a todo", async () => {
-  await actions.addTodo(screen, "First todo");
-
+test("A valid todo can be added", async () => {
+  await actions.typeTodoInput(screen, "First todo");
+  expect(elements.addTodoButton(screen)).toBeEnabled();
+  await actions.clickAddTodoButton(screen);
   expect(elements.todoItems(screen)).toHaveLength(1);
   expect(elements.todoText(screen, 0)).toHaveTextContent("First todo");
 });
 
-test("Input button is disabled when adding a blank todo", async () => {
+test("A blank todo cannot be added", async () => {
   expect(elements.addTodoButton(screen)).toBeDisabled();
-});
-
-test("Input button is enabled when adding a valid todo", async () => {
-  await actions.typeTodoInput(screen, "First todo");
-  expect(elements.addTodoButton(screen)).toBeEnabled();
-});
-
-test("Input error is shown when adding a blank todo", async () => {
-  await actions.addTodo(screen, "   ");
-  expect(elements.inputError(screen)).toBeVisible();
-  expect(elements.inputError(screen)).toHaveTextContent("Todo cannot be blank");
-});
-
-test("Input error disappears when a valid todo is added", async () => {
   await actions.typeTodoInput(screen, "   ");
-  await actions.clickAddTodoButton(screen);
-  expect(elements.inputError(screen)).toHaveTextContent("Todo cannot be blank");
-
-  await actions.addTodo(screen, "First todo");
-  expect(elements.inputError(screen)).not.toBeVisible();
+  expect(elements.addTodoButton(screen)).toBeDisabled();
 });
 
 test("Input is cleared after adding a todo", async () => {
   await actions.addTodo(screen, "First todo");
-
   expect(elements.todoInput(screen)).toHaveValue("");
 });
 
-test("A todo is removed when the delete button is clicked", async () => {
+test("A todo can be deleted", async () => {
   await actions.addTodo(screen, "First todo");
   await actions.deleteTodo(screen, 0);
 
   expect(elements.todoItems(screen)).toHaveLength(0);
 });
 
-test("A todo is strikethrough when it is completed", async () => {
+test("A todo can be completed", async () => {
   await actions.addTodo(screen, "First todo");
 
   expect(elements.todoText(screen, 0)).not.toHaveStyle({
     textDecoration: "line-through",
   });
 
+  expect(elements.completeButton(screen, 0)).toHaveTextContent("Complete");
   await actions.toggleCompleteTodo(screen, 0);
 
   expect(elements.todoText(screen, 0)).toHaveStyle({
@@ -81,5 +64,4 @@ test("A todo can be uncompleted", async () => {
   expect(elements.todoText(screen, 0)).not.toHaveStyle({
     textDecoration: "line-through",
   });
-  expect(elements.completeButton(screen, 0)).toHaveTextContent("Complete");
 });

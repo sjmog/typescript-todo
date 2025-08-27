@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useTodoStore } from "@/store";
 
 const TodoInput = () => {
@@ -6,15 +6,17 @@ const TodoInput = () => {
   const [inputError, setInputError] = useState<string | null>(null);
   const [newTodo, setNewTodo] = useState<string>("");
 
-  const isInputValid: boolean = !!newTodo;
+  const isInputValid: boolean = useMemo(() => !!newTodo?.trim(), [newTodo]);
 
   const handleAddTodo = () => {
-    if (!addTodo(newTodo)) {
-      setInputError("Todo cannot be blank");
-    } else {
-      setNewTodo("");
-      setInputError(null);
+    if (!isInputValid) {
+      setInputError("Todo cannot be empty");
+      return;
     }
+
+    addTodo(newTodo);
+    setNewTodo("");
+    setInputError(null);
   };
 
   return (
